@@ -1,9 +1,11 @@
 class NationFacade
-  def self.nation_search_details(nation = 'Fire Nation', per_page = 97, page = 1)
-    json = NationService.nation_search(nation)
-    json[:results].map do |data|
-      Nation.new(data)
-    end.first(25)
+  def self.nation_search_details(nation, pages = 5)
+    response = (1..pages).sum do |p|
+      NationService.nation_search(nation, p)
+    end
+    response.map do |char_details|
+      Nation.new(char_details)
+    end
   end
 end
 

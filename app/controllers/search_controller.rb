@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
   def index
-    nation  = params[:nation]
-    @nation_members = NationFacade.nation_search_details(nation, 97, 1)
-    require "pry"; binding.pry
+    nation  = params[:nation].gsub('_',' ')
+    @total_members = NationFacade.nation_search_details(nation, pages = 5)
+    @batch_of_twenty_five = @total_members.first(25)
   end
 end
